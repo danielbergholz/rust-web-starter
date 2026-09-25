@@ -1,0 +1,178 @@
+/*
+ * Later layers always win over earlier ones, regardless of selector
+ * specificity. Component styles that belong to a single template live in that
+ * template, inside `@scope`.
+ */
+@layer reset, base, components, utilities;
+
+/* Smooth cross-page transitions, like a SPA. */
+@view-transition {
+  navigation: auto;
+}
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  input,
+  button {
+    font: inherit;
+  }
+}
+
+@layer base {
+  /* Design tokens: use these instead of raw values. */
+  :root {
+    color-scheme: light dark;
+
+    --color-bg: #f1f5f9;
+    --color-surface: #ffffff;
+    --color-border: #e2e8f0;
+    --color-text: #0f172a;
+    --color-muted: #64748b;
+    --color-accent: #2563eb;
+    --color-accent-hover: #1d4ed8;
+    --color-danger: #dc2626;
+    --color-danger-bg: #fee2e2;
+
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-12: 3rem;
+
+    --text-sm: 0.875rem;
+    --text-2xl: 1.875rem;
+
+    --radius: 0.75rem;
+    --radius-sm: 0.5rem;
+
+    --font-sans: system-ui, -apple-system, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #0f172a;
+      --color-surface: #1e293b;
+      --color-border: #334155;
+      --color-text: #f1f5f9;
+      --color-muted: #94a3b8;
+      --color-accent: #3b82f6;
+      --color-accent-hover: #60a5fa;
+      --color-danger: #f87171;
+      --color-danger-bg: #450a0a;
+    }
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+  }
+
+  main {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: var(--space-12) var(--space-4);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: var(--text-2xl);
+    letter-spacing: -0.02em;
+  }
+
+  input {
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-accent);
+    }
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  a {
+    color: var(--color-accent);
+  }
+}
+
+@layer components {
+  .card {
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+
+  .new-note {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+
+    & button {
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-accent);
+      color: white;
+      font-weight: 600;
+      border: 0;
+      border-radius: var(--radius-sm);
+
+      &:hover {
+        background: var(--color-accent-hover);
+      }
+    }
+  }
+
+  .notes {
+    margin-top: var(--space-8);
+  }
+
+  .error {
+    margin: var(--space-6) 0 0;
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+    border-radius: var(--radius-sm);
+  }
+
+  .link-button {
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--color-accent);
+    font-size: var(--text-sm);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@layer utilities {
+  .muted {
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+  }
+
+  .danger {
+    color: var(--color-danger);
+  }
+}

@@ -1,0 +1,11 @@
+{% for note in notes %}
+  <li>
+    <p>{{ note.text }}</p>
+    <time datetime="{{ note.created_at }}">{{ note.created_at }}</time>
+    <form method="post" action="/notes/{{ note.id }}/delete">
+      <button type="submit" class="link-button danger">delete</button>
+    </form>
+  </li>
+{% else %}
+  <li class="empty">No notes found.</li>
+{% endfor %}

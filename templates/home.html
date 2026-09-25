@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Notes</h1>
+  <p class="muted">Rust + axum + askama + sqlx. No frontend build step.</p>
+
+  {% if let Some(error) = error %}
+    <p class="error" role="alert">{{ error }}</p>
+  {% endif %}
+
+  <form method="post" action="/notes" class="card new-note">
+    <input name="text" required maxlength="500" placeholder="Write something..." autocomplete="off">
+    <button type="submit">Save</button>
+  </form>
+
+  <section class="notes">
+    <!-- @scope with no selector applies only inside this <section>. -->
+    <style>
+      @scope {
+        ul {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-2);
+          margin: var(--space-4) 0 0;
+          padding: 0;
+          list-style: none;
+        }
+
+        li {
+          display: flex;
+          align-items: center;
+          gap: var(--space-4);
+          padding: var(--space-3) var(--space-4);
+          background: var(--color-surface);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius);
+        }
+
+        li.empty {
+          justify-content: center;
+          background: none;
+          border: 0;
+          color: var(--color-muted);
+        }
+
+        p {
+          flex: 1;
+          margin: 0;
+          overflow-wrap: anywhere;
+        }
+
+        time {
+          color: var(--color-muted);
+          font-size: var(--text-sm);
+          white-space: nowrap;
+        }
+      }
+    </style>
+
+    <input
+      type="search"
+      placeholder="Search notes..."
+      autocomplete="off"
+      data-search-url="/notes/search"
+      data-search-target="#notes"
+    >
+
+    <ul id="notes">
+      {% include "notes.html" %}
+    </ul>
+  </section>
+{% endblock %}

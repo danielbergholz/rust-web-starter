@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Rust Web Starter{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!--
+      Instant navigation: prerender same-origin pages when the user is about to
+      click a link. Only safe because GET routes have no side effects.
+    -->
+    <script type="speculationrules">
+      { "prerender": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+  </head>
+  <body>
+    <main>{% block content %}{% endblock %}</main>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
