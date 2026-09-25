@@ -84,7 +84,7 @@ Optional tools:
 ├── static/               # style.css and app.js, served at /static
 ├── templates/            # askama templates (base layout, pages, fragments)
 ├── docs/stack.md         # why this stack
-└── CLAUDE.md             # conventions for AI coding agents (AGENTS.md links here)
+└── AGENTS.md             # conventions for AI coding agents
 ```
 
 The example app is a small notes list with create, delete and live search. It

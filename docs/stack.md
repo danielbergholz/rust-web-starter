@@ -254,7 +254,7 @@ are tested in a browser.
 
 **Tips:**
 
-- **A `CLAUDE.md` (or `AGENTS.md`)** with the stack, versions and verification
+- **An `AGENTS.md`** with the stack, versions and verification
   commands (`cargo check`, `cargo clippy`, `cargo test`). This template ships
   one.
 - **The `sqlx::query!` macros**: they check SQL against the real database at
