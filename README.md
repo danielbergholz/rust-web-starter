@@ -1,7 +1,7 @@
 # rust-web-starter
 
 A minimal template for full-stack web apps in Rust: server-rendered HTML, a
-SQLite database, and a vanilla HTML/CSS/JS frontend. No Node, no frontend build
+PostgreSQL database, and a vanilla HTML/CSS/JS frontend. No Node, no frontend build
 step, 8 crates.
 
 Built to be easy to work on for both people and AI coding agents: the compiler
@@ -15,7 +15,7 @@ with `curl`.
 | [`tokio`](https://docs.rs/tokio) | Async runtime |
 | [`axum`](https://docs.rs/axum) | HTTP server: routes, extractors, responses |
 | [`serde`](https://docs.rs/serde) | Forms and query strings → structs |
-| [`sqlx`](https://docs.rs/sqlx) | Database (SQLite), plain SQL, migrations |
+| [`sqlx`](https://docs.rs/sqlx) | Database (PostgreSQL), plain SQL, migrations |
 | [`askama`](https://docs.rs/askama) | HTML templates checked at compile time |
 | [`tower-http`](https://docs.rs/tower-http) | Static files and request logging |
 | [`tracing`](https://docs.rs/tracing) + [`tracing-subscriber`](https://docs.rs/tracing-subscriber) | Logging |
@@ -29,7 +29,7 @@ reasoning, alternatives, and what the Rust community uses.
 
 ## Getting started
 
-You need [Rust](https://rustup.rs). Create a new project from this template:
+You need [Rust](https://rustup.rs) and a running PostgreSQL server. Create a new project from this template:
 
 ```sh
 gh repo create my-app --template danielbergholz/rust-web-starter --private --clone
@@ -44,8 +44,18 @@ Rename the crate in `Cargo.toml` (`name = "my-app"`), then:
 cargo run
 ```
 
-Open <http://127.0.0.1:3000>. The SQLite database (`app.db`) is created and
-migrated on startup.
+Open <http://127.0.0.1:3000>. The database is created (if it does not exist)
+and migrated on startup.
+
+The default `DATABASE_URL` connects as `postgres:postgres` on `localhost:5432`.
+If you do not have Postgres yet, the quickest way is Docker:
+
+```sh
+docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:17
+```
+
+[Postgres.app](https://postgresapp.com) (macOS) also works with the default.
+For any other setup, set `DATABASE_URL`.
 
 ## Commands
 
@@ -64,14 +74,14 @@ Optional tools:
 - [`bacon`](https://github.com/Canop/bacon): `cargo install bacon`, then
   `bacon run` rebuilds and restarts the app on every save.
 - [`sqlx-cli`](https://crates.io/crates/sqlx-cli):
-  `cargo install sqlx-cli --no-default-features --features sqlite`, then
+  `cargo install sqlx-cli --no-default-features --features postgres`, then
   `sqlx migrate add <name>` creates a new migration.
 
 ## Configuration
 
 | Variable | Default |
 |---|---|
-| `DATABASE_URL` | `sqlite:app.db` |
+| `DATABASE_URL` | `postgres://postgres:postgres@localhost:5432/rust_web_starter` |
 | `ADDR` | `127.0.0.1:3000` |
 | `RUST_LOG` | `info,tower_http=debug` |
 

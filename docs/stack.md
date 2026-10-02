@@ -52,7 +52,7 @@ Rust has no dominant "Rails". The community builds apps by combining libraries
 askama = "0.16"
 axum = "0.8"
 serde = { version = "1", features = ["derive"] }
-sqlx = { version = "0.9", features = ["runtime-tokio", "sqlite", "migrate"] }
+sqlx = { version = "0.9", features = ["runtime-tokio", "postgres", "migrate"] }
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 tower-http = { version = "0.7", features = ["fs", "trace"] }
 tracing = "0.1"
@@ -65,15 +65,15 @@ To add them all to a new project:
 cargo add tokio --features rt-multi-thread,macros
 cargo add axum askama tracing
 cargo add serde --features derive
-cargo add sqlx --features runtime-tokio,sqlite,migrate
+cargo add sqlx --features runtime-tokio,postgres,migrate
 cargo add tower-http --features fs,trace
 cargo add tracing-subscriber --features env-filter
 ```
 
 Notes:
 
-- To switch databases, replace the `sqlite` feature of sqlx with `postgres` or
-  `mysql`.
+- To switch databases, replace the `postgres` feature of sqlx with `sqlite` or
+  `mysql` (and adapt the SQL: placeholders, types, `ILIKE`).
 - The `trace` feature of `tower-http` is what makes every request (method,
   path, status and latency) show up in the logs.
 - Without `tracing` + `tracing-subscriber`, a 500 error happens with no
