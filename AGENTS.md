@@ -11,7 +11,7 @@ Server-rendered web app. No frontend framework, no Node, no frontend build step.
 | Runtime | `tokio` |
 | HTTP | `axum` (routes, extractors, responses) |
 | (De)serialization | `serde` (forms, query strings) |
-| Database | `sqlx` with SQLite, plain SQL, migrations in `migrations/` |
+| Database | `sqlx` with PostgreSQL, plain SQL, migrations in `migrations/` |
 | HTML | `askama` templates in `templates/`, checked at compile time |
 | Static files and request logs | `tower-http` (`ServeDir`, `TraceLayer`) |
 | Logging | `tracing` + `tracing-subscriber` |
@@ -33,7 +33,8 @@ cargo test
 Before finishing any task, run `cargo fmt`, `cargo clippy --all-targets -- -D warnings`
 and `cargo test`. All three must pass (CI runs the same commands).
 
-Environment variables: `DATABASE_URL` (default `sqlite:app.db`), `ADDR` (default
+Environment variables: `DATABASE_URL` (default
+`postgres://postgres:postgres@localhost:5432/rust_web_starter`), `ADDR` (default
 `127.0.0.1:3000`), `RUST_LOG` (default `info,tower_http=debug`).
 
 ## Verifying changes
